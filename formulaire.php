@@ -222,7 +222,7 @@
 
       <div class="col-xs-4 acces">
 
-        <label class="labelcol" for="selec1"><i class="fa fa-list" aria-hidden="true"></i> Accés: </label>
+        <label class="labelcol" for="selec1"><i class="fa fa-list" aria-hidden="true"></i> Accés : </label>
         <p class="info"><i class="fa fa-question-circle" aria-hidden="true"></i> Veuillez sélectionner la zone d'accès du stade.</p>
         <select class="form-control" onchange="accesfct(this)" name="maselec1" value="" id="selec1">
           <option value="init">Sélectionnez un accés</option>
@@ -236,7 +236,7 @@
 
 
      <div class="col-xs-4 rang">
-       <label class="labelcol" for="selec2"><i class="fa fa-list" aria-hidden="true"></i> Rang: </label>
+       <label class="labelcol" for="selec2"><i class="fa fa-list" aria-hidden="true"></i> Rang : </label>
        <p class="info"><i class="fa fa-question-circle" aria-hidden="true"></i> Veuillez sélectionner le rang d'accès du stade.</p>
        <select class="form-control" value="" name="maselec2" onchange="rangfct(this,0)" id="selec2">
          <option value="init">Sélectionnez un rang</option>
@@ -248,7 +248,7 @@
     </div>
 
     <div class="col-xs-4 place">    
-     <label class="labelcol" for="selec3"><i class="fa fa-list" aria-hidden="true"></i> Place:  </label>
+     <label class="labelcol" for="selec3"><i class="fa fa-list" aria-hidden="true"></i> Place :  </label>
      <p class="info"><i class="fa fa-question-circle" aria-hidden="true"></i> Veuillez sélectionner le numéro de place souhaité dans le stade.</p>
      <select class="form-control" value="" name="maselec3" id="selec3" onchange="validselect(this)">
        <option value="init">Sélectionnez une place</option>
