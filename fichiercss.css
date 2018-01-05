@@ -1,0 +1,280 @@
+
+.modal-content
+{
+background-color: #102B64;
+color: #EABB0E;
+}
+
+.btn-error
+{
+background-color: #EABB0E;
+color: #102B64;
+}
+
+.btn-error:hover
+{
+background-color: #102B64;
+color: #EABB0E;
+}
+
+ .divform, .divmatch
+ {
+   padding: 2% 2% 2% 2%;
+   background-color: #102B64;
+   border-style: solid;
+   border-width: 5px 5px 5px 5px;
+   border-color: #EABB0E;
+   border-radius: 10px;
+   font-size: 14px;
+   font-family: 'Yanone Kaffeesatz', sans-serif;
+ }
+
+.titrediv
+{
+   padding: 2% 2% 2% 2%;
+   background-color: #102B64;
+   border-style: solid;
+   border-width: 5px 5px 5px 5px;
+   border-color: #EABB0E;
+   color: white;
+   border-radius: 10px;
+   font-family: 'Yanone Kaffeesatz', sans-serif;
+   margin-bottom: 2%;
+}
+
+ #partenaires
+ {
+width: 100%;
+height: 100%;
+ }
+
+ .divradio
+ {
+ background-color:#EABB0E;
+ border-radius: 10px;
+ color: #102B64;
+ padding-top: 1%;
+ }
+
+ .divmatch
+ {
+  margin-top: 2%;
+ }
+
+.info
+{
+display: none;
+}
+
+#env
+{
+margin-top: 3%;
+border-radius: 50%;
+background: url("./logos_equipes/sticker.png");
+color: #102B64;
+font-weight: bold;
+font-size: 16px;
+background-size: 5em 5em;
+width: 5em;
+height: 5em;
+
+}
+
+
+.divnom:hover > .info,
+.divprenom:hover > .info,
+.divadresse:hover > .info,
+.divville:hover > .info,
+.divradio:hover > .info,
+.divnaissance:hover > .info,
+.divcp:hover > .info,
+.divmail:hover > .info,
+.equipeext:hover >.info,
+.rang:hover > .info,
+.acces:hover > .info,
+.place:hover > .info
+{
+ display: inline;
+ position: absolute;
+ background-color: #FDFABD;
+ border-radius: 10px;
+ padding: 2px 2px 2px 2px;
+ margin-left: 1%;
+ font-size: 14px;
+}
+
+.divacces
+{
+margin-top: 18px;
+display: none;
+}
+
+
+#alert
+{
+ display: none;
+}
+
+.alert_text
+{
+ font-size: 16px;
+}
+
+.divaffichmatch
+{
+  display: none;
+  border-radius: 10px;
+  background-color: #EABB0E;
+  padding: 1% 1% 1% 1%;
+  color :#102B64;
+}
+
+.duelmatch
+{
+  border-radius: 10px;
+  background-color: white; 
+}
+
+#ballon
+{
+width: 50%;
+height: 50%;
+}
+
+#comtois
+{
+padding-top: 10%;
+width:80%; 
+height:80%;
+}
+
+.labelcol
+{
+color: white;
+}
+
+
+
+input[type="radio"] {
+    background-color: #102B64;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8),
+                0 0 0 1px hsla(0,0%,0%,.6),
+                0 2px 3px hsla(0,0%,0%,.6),
+                0 4px 3px hsla(0,0%,0%,.4),
+                0 6px 6px hsla(0,0%,0%,.2),
+                0 10px 6px hsla(0,0%,0%,.2);
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    -webkit-appearance: none;
+}
+input[type="radio"]:after {
+    background-color: #EABB0E;
+    border-radius: 25px;
+    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.4),
+                0 1px 1px hsla(0,0%,100%,.8);
+    content: '';
+    display: block;
+    height: 7px;
+    left: 4px;
+    position: relative;
+    top: 4px;
+    width: 7px;
+}
+input[type="radio"]:checked:after {
+    background-color: white;
+    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.4),
+                inset 0 2px 2px hsla(0,0%,100%,.4),
+                0 1px 1px hsla(0,0%,100%,.8),
+                0 0 2px 2px hsla(0,70%,70%,.4);
+}
+
+@media only screen and (min-width: 0px) and (max-width: 768px) {
+
+ .divform, .divmatch
+ {
+  font-size: 14px;
+ }
+
+.divaffichmatch,.duelmatch
+  {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  }
+
+.imgequ
+{
+  width:2em;
+  height:2em;
+
+}
+
+#cross
+{
+  width:1.4em; 
+  height:1.4em;
+  margin-top: 20%;
+}
+
+
+} 
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+ .divform, .divmatch, .info
+ {
+  font-size: 16px;
+ }
+
+.divaffichmatch,.duelmatch
+  {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  }
+
+.imgequ
+{
+  width:3.7em;
+  height:3.7em;
+
+}
+
+#cross
+{
+  width:1.8em; 
+  height:1.8em;
+  margin-top: 20%;
+}
+
+
+}
+
+@media only screen and (min-width: 992px) {
+
+ .divform, .divmatch, .info
+ {
+  font-size: 18px;
+ }
+
+  .duelmatch
+  {
+    padding: 1% 1% 1% 1%;
+  }
+  .imgequ
+{
+  width:4em;
+  height:4em;
+
+}
+
+#cross
+{
+  width:2em; 
+  height:2em;
+  margin-top: 70%;
+}
+
+
+}
+

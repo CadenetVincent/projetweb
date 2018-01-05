@@ -17,6 +17,7 @@ $valid=0;
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./fichiercss2.css">
   <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 
@@ -27,6 +28,8 @@ $valid=0;
 <div class="row"> 
 
   <?php
+
+  require "./utilisateur.php";
 
   try
   {
@@ -202,6 +205,9 @@ $valid=0;
 
       foreach ($affichpages as $affichles) 
       {
+
+        $utilisateur = new User( $affichles['civilite'], $affichles['nom'], $affichles['prenom'], $affichles['cp'], $affichles['ville'], $affichles['adresse'], $affichles['naissance'], $affichles['mail'], $affichles['inscription'], $affichles['acces'], $affichles['rang'], $affichles['place'], $affichles['equipeadv'], $affichles['rencontre'], $affichles['validation'], $affichles['id']);
+
         ?>
 
         <div class="col-xs-6 grpins">
@@ -215,28 +221,28 @@ $valid=0;
             <div class="panel-body col-xs-8 col-xs-offset-2 text-center">
 
             <div class="titleins">
-              <a href= <?php echo "administrateur.php?a=".$affichles['id']."" ?> > <?php echo "<h2> Inscription N° ".$affichles['id']."</h2>"; ?></a>
+              <a href= <?php echo "administrateur.php?a=".$utilisateur->getId()."" ?> > <?php echo "<h2> Inscription N° ".$affichles['id']."</h2>"; ?></a>
             </div>
 
             </div>
 
             <div class="panel-footer">
               <table class="table">
-               <tr><th scope="row"> Inscription :</th> <td><?php echo $affichles['inscription'] ?></td></tr>
-               <tr><th scope="row"> Civilité :</th> <td><?php echo $affichles['civilite'] ?></td></tr>
-               <tr><th scope="row"> Nom :</th> <td><?php echo $affichles['nom'] ?></td></tr>
-               <tr><th scope="row"> Prénom :</th> <td><?php echo $affichles['prenom'] ?></td></tr>
-               <tr><th scope="row"> Code Postal :</th> <td><?php echo $affichles['cp'] ?></td></tr>
-               <tr><th scope="row"> Ville :</th> <td><?php echo $affichles['ville'] ?></td></tr>
-               <tr><th scope="row"> Adresse :</th> <td><?php echo $affichles['adresse'] ?></td></tr>
-               <tr><th scope="row"> Naissance :</th> <td><?php echo $affichles['naissance'] ?></td></tr>
-               <tr><th scope="row"> Mail :</th> <td><?php echo $affichles['mail'] ?></td></tr>
-               <tr><th scope="row"> Accés :</th> <td><?php echo $affichles['acces'] ?></td></tr>
-               <tr><th scope="row"> Rang :</th> <td><?php echo $affichles['rang'] ?></td></tr>
-               <tr><th scope="row"> Place :</th> <td><?php echo $affichles['place'] ?></td></tr>
-               <tr><th scope="row"> Equipe adverse :</th> <td><?php echo $affichles['equipeadv'] ?></td></tr>
-               <tr><th scope="row"> Rencontre :</th> <td><?php echo $affichles['rencontre'] ?></td></tr>
-               <tr><th scope="row"> Validation :</th> <td><?php echo $affichles['validation'] ?></td></tr>
+               <tr><th scope="row"> Inscription :</th> <td><?php echo $utilisateur->getInscription()?></td></tr>
+               <tr><th scope="row"> Civilité :</th> <td><?php echo $utilisateur->getCivilite()?></td></tr>
+               <tr><th scope="row"> Nom :</th> <td><?php echo $utilisateur->getNom() ?></td></tr>
+               <tr><th scope="row"> Prénom :</th> <td><?php echo $utilisateur->getPrenom() ?></td></tr>
+               <tr><th scope="row"> Code Postal :</th> <td><?php echo $utilisateur->getCp() ?></td></tr>
+               <tr><th scope="row"> Ville :</th> <td><?php echo $utilisateur->getVille() ?></td></tr>
+               <tr><th scope="row"> Adresse :</th> <td><?php echo $utilisateur->getAdresse() ?></td></tr>
+               <tr><th scope="row"> Naissance :</th> <td><?php echo $utilisateur->getNaissance() ?></td></tr>
+               <tr><th scope="row"> Mail :</th> <td><?php echo $utilisateur->getMail() ?></td></tr>
+               <tr><th scope="row"> Accés :</th> <td><?php echo $utilisateur->getAcces() ?></td></tr>
+               <tr><th scope="row"> Rang :</th> <td><?php echo $utilisateur->getRang() ?></td></tr>
+               <tr><th scope="row"> Place :</th> <td><?php echo $utilisateur->getPlace() ?></td></tr>
+               <tr><th scope="row"> Equipe adverse :</th> <td><?php echo $utilisateur->getEquipeadv() ?></td></tr>
+               <tr><th scope="row"> Rencontre :</th> <td><?php echo $utilisateur->getRencontre() ?></td></tr>
+               <tr><th scope="row"> Validation :</th> <td><?php echo $utilisateur->getValidation() ?></td></tr>
              </table>
            </div>
          </div>
@@ -279,11 +285,13 @@ $valid=0;
 
   elseif (isset($_GET['a'])) 
   {
+    $annonceselec=$_GET['a'];
 
-    $sql= "SELECT * FROM utilisateur WHERE id=".$_GET['a']." LIMIT 1";
+    $sql= "SELECT * FROM utilisateur WHERE id=".$annonceselec." LIMIT 1";
     $monannonce = $bdd->query($sql);
     $afficheannonce = $monannonce->fetch();
 
+    $utilisateur2 = new User( $afficheannonce['civilite'], $afficheannonce['nom'], $afficheannonce['prenom'], $afficheannonce['cp'], $afficheannonce['ville'], $afficheannonce['adresse'], $afficheannonce['naissance'], $afficheannonce['mail'], $afficheannonce['inscription'], $afficheannonce['acces'], $afficheannonce['rang'], $afficheannonce['place'], $afficheannonce['equipeadv'], $afficheannonce['rencontre'], $afficheannonce['validation'], $afficheannonce['id']);
 
     ?>
 
@@ -291,7 +299,7 @@ $valid=0;
 
       <div class="col-xs-8 col-xs-offset-2 annonce">
 
-       <form method="post" action=<?php echo "administrateur.php?a=".$_GET['a']."" ?> name="annoncegestion">
+       <form method="post" action=<?php echo "administrateur.php?a=".$utilisateur2->getId()."" ?> name="annoncegestion">
 
         <div class="row">
 
@@ -302,112 +310,112 @@ $valid=0;
 
              <div class="col-xs-12 text-center">
              <li class="list-group-item">
-             <h4 id="titleannonce"><strong> Numéro d'inscription : <?php  echo $afficheannonce['id'] ?> </strong></h4>
+             <h4 id="titleannonce"><strong> Numéro d'inscription : <?php  echo $utilisateur2->getId() ?> </strong></h4>
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Inscription : </label>
-             <input class="form-control" type="textarea" name="updinscription" value="<?php echo $afficheannonce['inscription']?>">
+             <input class="form-control" type="textarea" name="upd[inscription]" value="<?php if(isset($_POST['upd']['inscription'])){ echo $_POST['upd']['inscription']; }else{ echo $utilisateur2->getInscription(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Civilité : </label>
-             <input class="form-control" type="text" name="updcivilite" value="<?php echo $afficheannonce['civilite']?>">
+             <input class="form-control" type="text" name="upd[civilite]" value="<?php if(isset($_POST['upd']['civilite]'])){ echo $_POST['upd']['civilite']; }else{ echo $utilisateur2->getCivilite(); } ?>">
              </li>
              </div>             
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Nom : </label>
-             <input class="form-control" type="text" name="updnom" value="<?php echo $afficheannonce['nom']?>">
+             <input class="form-control" type="text" name="upd[nom]" value="<?php if(isset($_POST['upd']['nom'])){ echo $_POST['upd']['nom']; }else{ echo $utilisateur2->getNom(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Prénom : </label>
-             <input class="form-control" type="text" name="updprenom" value="<?php echo $afficheannonce['prenom']?>">
+             <input class="form-control" type="text" name="upd[prenom]" value="<?php if(isset($_POST['upd']['prenom'])){ echo $_POST['upd']['prenom']; }else{ echo $utilisateur2->getPrenom(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Code Postal : </label>
-             <input class="form-control" type="text" name="updcp" value="<?php echo $afficheannonce['cp']?>">
+             <input class="form-control" type="text" name="upd[cp]" value="<?php if(isset($_POST['upd']['cp'])){ echo $_POST['upd']['cp']; }else{ echo $utilisateur2->getCp(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Ville : </label>
-             <input class="form-control" type="text" name="updville" value="<?php echo $afficheannonce['ville']?>">
+             <input class="form-control" type="text" name="upd[ville]" value="<?php if(isset($_POST['upd']['ville'])){ echo $_POST['upd']['ville']; }else{ echo $utilisateur2->getVille(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Adresse : </label>
-             <input class="form-control" type="text" name="updadresse" value="<?php echo $afficheannonce['adresse']?>">
+             <input class="form-control" type="text" name="upd[adresse]" value="<?php if(isset($_POST['upd']['adresse'])){ echo $_POST['upd']['adresse']; }else{ echo $utilisateur2->getAdresse(); }  ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Naissance : </label>
-             <input class="form-control" type="text" name="updnaissance" value="<?php echo $afficheannonce['naissance']?>">
+             <input class="form-control" type="text" name="upd[naissance]" value="<?php if(isset($_POST['upd']['naissance'])){ echo $_POST['upd']['naissance']; }else{ echo $utilisateur2->getNaissance(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Mail : </label>
-             <input class="form-control" type="text" name="updmail" value="<?php echo $afficheannonce['mail']?>">
+             <input class="form-control" type="text" name="upd[mail]" value="<?php if(isset($_POST['upd']['mail'])){ echo $_POST['upd']['mail']; }else{ echo $utilisateur2->getMail(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Accés : </label>
-             <input class="form-control" type="text" name="updacces" value="<?php echo $afficheannonce['acces']?>">
+             <input class="form-control" type="text" name="upd[acces]" value="<?php if(isset($_POST['upd']['acces'])){ echo $_POST['upd']['acces']; }else{ echo $utilisateur2->getAcces(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Rang : </label>
-             <input class="form-control" type="text" name="updrang" value="<?php echo $afficheannonce['rang']?>">
+             <input class="form-control" type="text" name="upd[rang]" value="<?php if(isset($_POST['upd']['rang'])){ echo $_POST['upd']['rang']; }else{ echo $utilisateur2->getRang(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Place : </label>
-             <input class="form-control" type="text" name="updplace" value="<?php echo $afficheannonce['place']?>">
+             <input class="form-control" type="text" name="upd[place]" value="<?php if(isset($_POST['upd']['place'])){ echo $_POST['upd']['place']; }else{ echo $utilisateur2->getPlace(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Equipe adverse : </label>
-             <input class="form-control" type="text" name="updequipeadv" value="<?php echo $afficheannonce['equipeadv']?>">
+             <input class="form-control" type="text" name="upd[equipeadv]" value="<?php if(isset($_POST['upd']['equipeadv'])){ echo $_POST['upd']['equipeadv']; }else{echo $utilisateur2->getEquipeadv(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Rencontre : </label>
-             <input class="form-control" type="text" name="updrencontre" value="<?php echo $afficheannonce['rencontre']?>">
+             <input class="form-control" type="text" name="upd[rencontre]" value="<?php if(isset($_POST['upd']['rencontre'])){ echo $_POST['upd']['rencontre']; }else{ echo $utilisateur2->getRencontre(); } ?>">
              </li>
              </div>
 
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Validation : </label>
-             <input class="form-control" type="text" name="updvalidation" value="<?php echo $afficheannonce['validation']?>">
+             <input class="form-control" type="text" name="upd[validation]" value="<?php if(isset($_POST['upd']['validation'])){ echo $_POST['upd']['validation']; }else{ echo $utilisateur2->getValidation(); }?>">
              </li>
              </div>
 
@@ -448,46 +456,117 @@ $valid=0;
   if (isset($_POST['modifins'])) 
   {
 
+$util = array();
+
+foreach ($_POST['upd'] as $key=>$updates) 
+{
+$util[$key]=$updates;
+}
+
+    $utilisateur3 = new User( $util['civilite'], $util['nom'], $util['prenom'], $util['cp'], $util['ville'], $util['adresse'], $util['naissance'], $util['mail'], $util['inscription'], $util['acces'], $util['rang'], $util['place'], $util['equipeadv'], $util['rencontre'], $util['validation'], $annonceselec);
+
     $stmtann = $bdd->prepare('UPDATE utilisateur SET civilite = :civilite, nom = :nom, prenom = :prenom, cp = :cp, ville = :ville, adresse = :adresse, naissance = :naissance, mail = :mail, inscription = :inscription, acces = :acces, rang = :rang, place = :place, equipeadv = :equipeadv, rencontre = :rencontre, validation = :validation WHERE id = :id');
 
-     $stmtann->bindValue('civilite', $_POST['updcivilite'], PDO::PARAM_STR);
-     $stmtann->bindValue('nom', $_POST['updnom'], PDO::PARAM_STR);
-     $stmtann->bindValue('prenom', $_POST['updprenom'], PDO::PARAM_STR);
+     $stmtann->bindValue('civilite', $utilisateur3->getCivilite(), PDO::PARAM_STR);
+     $stmtann->bindValue('nom', $utilisateur3->getNom(), PDO::PARAM_STR);
+     $stmtann->bindValue('prenom', $utilisateur3->getPrenom(), PDO::PARAM_STR);
 
-     $stmtann->bindValue('cp', $_POST['updcp'], PDO::PARAM_STR);
-     $stmtann->bindValue('ville', $_POST['updville'], PDO::PARAM_STR);
-     $stmtann->bindValue('adresse', $_POST['updadresse'], PDO::PARAM_STR);
+     $stmtann->bindValue('cp', $utilisateur3->getCp(), PDO::PARAM_STR);
+     $stmtann->bindValue('ville', $utilisateur3->getVille(), PDO::PARAM_STR);
+     $stmtann->bindValue('adresse', $utilisateur3->getAdresse(), PDO::PARAM_STR);
 
-     $stmtann->bindValue('naissance', $_POST['updnaissance'], PDO::PARAM_STR);
-     $stmtann->bindValue('mail', $_POST['updmail'], PDO::PARAM_STR);
-     $stmtann->bindValue('inscription',$_POST['updinscription'], PDO::PARAM_STR); 
+     $stmtann->bindValue('naissance', $utilisateur3->getNaissance(), PDO::PARAM_STR);
+     $stmtann->bindValue('mail', $utilisateur3->getMail(), PDO::PARAM_STR);
+     $stmtann->bindValue('inscription',$utilisateur3->getInscription(), PDO::PARAM_STR); 
 
-     $stmtann->bindValue('acces', $_POST['updacces'], PDO::PARAM_STR); 
-     $stmtann->bindValue('rang', $_POST['updrang'], PDO::PARAM_INT); 
-     $stmtann->bindValue('place', $_POST['updplace'], PDO::PARAM_INT); 
+     $stmtann->bindValue('acces', $utilisateur3->getAcces(), PDO::PARAM_STR); 
+     $stmtann->bindValue('rang', $utilisateur3->getRang(), PDO::PARAM_INT); 
+     $stmtann->bindValue('place', $utilisateur3->getPlace(), PDO::PARAM_INT); 
 
-     $stmtann->bindValue('equipeadv', $_POST['updequipeadv'], PDO::PARAM_STR); 
-     $stmtann->bindValue('rencontre', $_POST['updrencontre'], PDO::PARAM_STR); 
-     $stmtann->bindValue('validation', $_POST['updvalidation'], PDO::PARAM_INT); 
+     $stmtann->bindValue('equipeadv', $utilisateur3->getEquipeadv(), PDO::PARAM_STR); 
+     $stmtann->bindValue('rencontre', $utilisateur3->getRencontre(), PDO::PARAM_STR); 
+     $stmtann->bindValue('validation', $utilisateur3->getValidation(), PDO::PARAM_INT); 
 
-     $stmtann->bindValue('id', $_GET['a'], PDO::PARAM_INT); 
+     $stmtann->bindValue('id', $utilisateur3->getId(), PDO::PARAM_INT); 
 
      $stmtann->execute();
 
      ?>
 
     <div class="col-xs-12 text-center alertmss">
-    <p><i class="fa fa-info fa-2x" aria-hidden="true"></i> Opération effectué avec succès </p>
+    <p><i class="fa fa-info fa-2x" aria-hidden="true"></i> Opération de modification effectué avec succès </p>
+    <p>Vous avez changé :</p>
+    <?php  
+
+    if ($utilisateur3->getCivilite() != $utilisateur2->getCivilite()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La civilité : '.$utilisateur2->getCivilite().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCivilite().'</p>';
+    }
+
+        if ($utilisateur3->getNom() != $utilisateur2->getNom()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le nom : '.$utilisateur2->getNom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNom().'</p>';
+    }
+
+        if ($utilisateur3->getPrenom() != $utilisateur2->getPrenom()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le prénom : '.$utilisateur2->getPrenom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPrenom().'</p>';
+    }
+
+        if ($utilisateur3->getCp() != $utilisateur2->getCp()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le Code Postal : '.$utilisateur2->getCp().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCp().'</p>';
+    }
+
+        if ($utilisateur3->getAdresse() != $utilisateur2->getAdresse()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'adresse : '.$utilisateur2->getAdresse().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAdresse().'</p>';
+    }
+
+            if ($utilisateur3->getNaissance() != $utilisateur2->getNaissance()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La naissance : '.$utilisateur2->getNaissance().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNaissance().'</p>';
+    }
+
+                if ($utilisateur3->getMail() != $utilisateur2->getMail()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le mail : '.$utilisateur2->getMail().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getMail().'</p>';
+    }
+
+                if ($utilisateur3->getInscription() != $utilisateur2->getInscription()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La naissance : '.$utilisateur2->getInscription().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getInscription().'</p>';
+    }
+
+                    if ($utilisateur3->getAcces() != $utilisateur2->getAcces()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'accés : '.$utilisateur2->getAcces().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAcces().'</p>';
+    }
+
+                    if ($utilisateur3->getRang() != $utilisateur2->getRang()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le rang : '.$utilisateur2->getRang().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRang().'</p>';
+    }
+
+                if ($utilisateur3->getPlace() != $utilisateur2->getPlace()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La place : '.$utilisateur2->getPlace().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPlace().'</p>';
+    }
+
+                if ($utilisateur3->getEquipeadv() != $utilisateur2->getEquipeadv()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'équipe adverse : '.$utilisateur2->getEquipeadv().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getEquipeadv().'</p>';
+    }
+
+                    if ($utilisateur3->getRencontre() != $utilisateur2->getRencontre()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La rencontre : '.$utilisateur2->getRencontre().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRencontre().'</p>';
+    }
+
+
+                    if ($utilisateur3->getValidation() != $utilisateur2->getValidation()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La validation : '.$utilisateur2->getValidation().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getValidation().'</p>';
+    }
+
+    ?>
     </div>
 
      <?php
+
   }
 
  elseif (isset($_POST['supins'])) 
  {
 
   $stmtann2 = $bdd->prepare('DELETE FROM utilisateur WHERE id = :id');
-  $stmtann2->bindValue('id', $_GET['a'], PDO::PARAM_INT); 
+  $stmtann2->bindValue('id', $annonceselec, PDO::PARAM_INT); 
   $stmtann2->execute();
 
  }
@@ -501,126 +580,6 @@ $valid=0;
 ?>
 
 </div>
-
-
-<style type="text/css">
-
-#imgadm
-{
-width:70%;
-height:70%;
-}
-
-.divformadm, .espaceadm, .pagin, .annonce
-{
-   padding: 2% 2% 2% 2%;
-   background-color: #102B64;
-   border-style: solid;
-   border-width: 5px 5px 5px 5px;
-   border-color: #EABB0E;
-   border-radius: 10px;
-   margin-top: 2%;
-}
-
-.divformadm, .espaceadm div h2, .pagin div 
-{
-color: white;
-}
-
-
-.panins div
-{
- background-color: #EABB0E; 
- color: #102B64;
-}
-
-#admbtn , #sedeco
-{
-background-color: #102B64;
-border-width: 5px 5px 5px 5px;
-border-color: white;
-color: white;
-padding: 5% 5% 5% 5%;
-border-radius :5px;
-}
-
-#adminbtn
-{
-margin-top: 20%;
-}
-
-.grpins
-{
-margin-top: 2%;
-}
-
-#admbtn:hover , #sedeco:hover
-{
-border-color: #EABB0E;
-color: #EABB0E;
-}
-
-.infoins 
-{
-background-color: white;
-border-width: 5px 5px 5px 5px;
-border-color: #EABB0E;
-color: #102B64;
-margin-top: 2%;
-padding: 2% 2% 2% 2%;
-border-radius :5px;
-}
-
-.titleins a h2
-{
-background-color: white;
-border-radius: 5px;
-color:#102B64; 
-}
-
-.divformadm, .espaceadm, .pagin
-{
-font-family: 'Yanone Kaffeesatz', sans-serif;
-font-size: 18px;
-}
-
-.annonce div li, .annonce div button
-{
-background-color: #EABB0E;
-color: #102B64;
-margin-top: 2%;
-margin-bottom: 2%;
-}
-
-#exit
-{
-border : none;
-border-radius: 50%;
-background-color: #EABB0E;
-color: #102B64;
-margin-top: 20%;
-}
-
-#exit:hover
-{
-  background-color: #102B64;
-  color: #EABB0E;
-}
-
-#titleannonce
-{
-text-decoration: underline;
-}
-
-.btn-group button:hover
-{
-  background-color: #102B64;
-  color: #EABB0E;
-}
-
-
-
-</style>
 
 </div>
 

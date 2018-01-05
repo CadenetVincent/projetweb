@@ -1,0 +1,117 @@
+#imgadm
+{
+width:70%;
+height:70%;
+}
+
+.divformadm, .espaceadm, .pagin, .annonce
+{
+   padding: 2% 2% 2% 2%;
+   background-color: #102B64;
+   border-style: solid;
+   border-width: 5px 5px 5px 5px;
+   border-color: #EABB0E;
+   border-radius: 10px;
+   margin-top: 2%;
+}
+
+.divformadm, .espaceadm div h2, .pagin div 
+{
+color: white;
+}
+
+
+.panins div
+{
+ background-color: #EABB0E; 
+ color: #102B64;
+}
+
+#admbtn , #sedeco
+{
+background-color: #102B64;
+border-width: 5px 5px 5px 5px;
+border-color: white;
+color: white;
+padding: 5% 5% 5% 5%;
+border-radius :5px;
+}
+
+#adminbtn
+{
+margin-top: 20%;
+}
+
+.grpins
+{
+margin-top: 2%;
+}
+
+#admbtn:hover , #sedeco:hover
+{
+border-color: #EABB0E;
+color: #EABB0E;
+}
+
+.infoins 
+{
+background-color: white;
+border-width: 5px 5px 5px 5px;
+border-color: #EABB0E;
+color: #102B64;
+margin-top: 2%;
+padding: 2% 2% 2% 2%;
+border-radius :5px;
+}
+
+.titleins a h2
+{
+background-color: white;
+border-radius: 5px;
+color:#102B64; 
+}
+
+.divformadm, .espaceadm, .pagin
+{
+font-family: 'Yanone Kaffeesatz', sans-serif;
+font-size: 18px;
+}
+
+.annonce div li, .annonce div button
+{
+background-color: #EABB0E;
+color: #102B64;
+margin-top: 2%;
+margin-bottom: 2%;
+}
+
+#exit
+{
+border : none;
+border-radius: 50%;
+background-color: #EABB0E;
+color: #102B64;
+margin-top: 20%;
+}
+
+#exit:hover
+{
+  background-color: #102B64;
+  color: #EABB0E;
+}
+
+#titleannonce
+{
+text-decoration: underline;
+}
+
+.btn-group button:hover
+{
+  background-color: #102B64;
+  color: #EABB0E;
+}
+
+.alertmss 
+{
+ background-color: #FDFABD;
+}
