@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Auxerre",
+        "date": "03\/08\/2018",
+        "img": ".\/logos_equipes\/Auxerre.png"
+    },
+    {
+        "name": "Bourg-P\u00e9ronnas",
+        "date": "16\/08\/2018",
+        "img": ".\/logos_equipes\/Bourg_Peronnas.png"
+    },
+    {
+        "name": "Brest",
+        "date": "09\/04\/2018",
+        "img": ".\/logos_equipes\/Brest.png"
+    },
+    {
+        "name": "Ch\u00e2teauroux",
+        "date": "29\/06\/2018",
+        "img": ".\/logos_equipes\/Chateauroux.png"
+    },
+    {
+        "name": "Clermont",
+        "date": "01\/03\/2018",
+        "img": ".\/logos_equipes\/Clermont.png"
+    },
+    {
+        "name": "GFC Ajaccio",
+        "date": "01\/09\/2018",
+        "img": ".\/logos_equipes\/AC_Ajaccio.png"
+    },
+    {
+        "name": "Le HAC",
+        "date": "16\/02\/2018",
+        "img": ".\/logos_equipes\/Le_Havre.png"
+    },
+    {
+        "name": "Lens",
+        "date": "19\/11\/2018",
+        "img": ".\/logos_equipes\/Lens.png"
+    },
+    {
+        "name": "Lorient",
+        "date": "20\/05\/2018",
+        "img": ".\/logos_equipes\/Lorient.png"
+    },
+    {
+        "name": "Nancy",
+        "date": "15\/12\/2018",
+        "img": ".\/logos_equipes\/Nancy.png"
+    },
+    {
+        "name": "N\u00eemes",
+        "date": "10\/02\/2018",
+        "img": ".\/logos_equipes\/Nimes.png"
+    },
+    {
+        "name": "Niort",
+        "date": "21\/11\/2018",
+        "img": ".\/logos_equipes\/Niort.png"
+    },
+    {
+        "name": "Orl\u00e9ans",
+        "date": "14\/06\/2018",
+        "img": ".\/logos_equipes\/Orleans.png"
+    },
+    {
+        "name": "Paris FC",
+        "date": "29\/07\/2018",
+        "img": ".\/logos_equipes\/Paris_FC.png"
+    },
+    {
+        "name": "Stade de Reims",
+        "date": "15\/10\/2018",
+        "img": ".\/logos_equipes\/Reims.png"
+    },
+    {
+        "name": "Tours",
+        "date": "10\/02\/2018",
+        "img": ".\/logos_equipes\/Tours.png"
+    },
+    {
+        "name": "Valenciennes",
+        "date": "10\/09\/2018",
+        "img": ".\/logos_equipes\/Valenciennes.png"
+    }
+]
