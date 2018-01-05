@@ -324,7 +324,7 @@ $valid=0;
              <div class="col-xs-4">
              <li class="list-group-item">
              <label> Civilité : </label>
-             <input class="form-control" type="text" name="upd[civilite]" value="<?php if(isset($_POST['upd']['civilite]'])){ echo $_POST['upd']['civilite']; }else{ echo $utilisateur2->getCivilite(); } ?>">
+             <input class="form-control" type="text" name="upd[civilite]" value="<?php if(isset($_POST['upd']['civilite'])){ echo $_POST['upd']['civilite']; }else{ echo $utilisateur2->getCivilite(); } ?>">
              </li>
              </div>             
 
@@ -493,13 +493,13 @@ $util[$key]=$updates;
 
      ?>
 
-    <div class="col-xs-12 text-center alertmss">
+    <div class="col-xs-8 col-xs-offset-2 alertmss">
     <p><i class="fa fa-info fa-2x" aria-hidden="true"></i> Opération de modification effectué avec succès </p>
     <p>Vous avez changé :</p>
     <?php  
 
     if ($utilisateur3->getCivilite() != $utilisateur2->getCivilite()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La civilité : '.$utilisateur2->getCivilite().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCivilite().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i><strong> La civilité : </strong>'.$utilisateur2->getCivilite().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCivilite().'</p>';
     }
 
         if ($utilisateur3->getNom() != $utilisateur2->getNom()) {
@@ -508,6 +508,10 @@ $util[$key]=$updates;
 
         if ($utilisateur3->getPrenom() != $utilisateur2->getPrenom()) {
     echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le prénom : '.$utilisateur2->getPrenom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPrenom().'</p>';
+    }
+
+            if ($utilisateur3->getVille() != $utilisateur2->getVille()) {
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La ville : '.$utilisateur2->getVille().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getVille().'</p>';
     }
 
         if ($utilisateur3->getCp() != $utilisateur2->getCp()) {
@@ -527,7 +531,7 @@ $util[$key]=$updates;
     }
 
                 if ($utilisateur3->getInscription() != $utilisateur2->getInscription()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La naissance : '.$utilisateur2->getInscription().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getInscription().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'inscription : '.$utilisateur2->getInscription().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getInscription().'</p>';
     }
 
                     if ($utilisateur3->getAcces() != $utilisateur2->getAcces()) {
