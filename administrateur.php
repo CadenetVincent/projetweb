@@ -17,7 +17,7 @@ $valid=0;
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="./fichiercss2.css">
+  <link rel="stylesheet" type="text/css" href="css/cssadm.css">
   <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 
@@ -60,7 +60,7 @@ $valid=0;
 
        <div class="col-xs-offset-3 col-xs-6 divformadm">
 
-         <form method="POST" action="administrateur.php?p=1" name="formadm">
+         <form method="POST" action="index.php?page=admin&q=total" name="formadm">
 
            <div class="row">
 
@@ -97,7 +97,9 @@ $valid=0;
     }
     if($_SESSION['login'] == LOGIN_ADMIN && $_SESSION['mdp'] == MDP_ADMIN) 
     {
-      if (!isset($_GET['a'])) {
+
+
+      if (!isset($_GET['a']) && isset($_GET['q'])) {
 
         ?>
 
@@ -117,7 +119,7 @@ $valid=0;
 
              <div class="col-xs-2 text-center">
 
-              <form method="post" action="administrateur.php" name="formdeco">
+              <form method="post" action="index.php?page=admin" name="formdeco">
               <button type="submit" name="deco" id="sedeco">
               <i class="fa fa-sign-out fa-5x" aria-hidden="true"></i>
               </button>
@@ -148,22 +150,34 @@ $valid=0;
               $total_val_att = $inscriptions_att->fetch();
               ?>
 
-             <p>Vous avez <?php echo $total_insc_adm[0]; ?> inscriptions au total.</p>
-             <p>Parmis ces inscriptions ... </p>
-             <p><span class="label label-default"><?php echo $total_nonval_adm[0]; ?></span> est/sont refusée(s).</p>
-             <p><span class="label label-default"><?php echo $total_val_adm[0]; ?></span> est/sont validée(s).</p>
-             <p><span class="label label-default"><?php echo $total_val_att[0]; ?></span> est/sont en attente de validation.</p>
+             <form method="post" action="index.php?page=admin&p=1" name="consultchoise">
+             <p>Vous avez <?php echo $total_insc_adm[0]; ?> inscriptions au total. <a href="index.php?page=admin&q=total&p=1">(Consulter)</a></p>
+             <p><span class="label label-default"><?php echo $total_nonval_adm[0]; ?></span> est/sont refusée(s). <a href="index.php?page=admin&q=ref&p=1">(Consulter)</a></p>
+             <p><span class="label label-default"><?php echo $total_val_adm[0]; ?></span> est/sont validée(s). <a href="index.php?page=admin&q=adm&p=1">(Consulter)</a></p>
+             <p><span class="label label-default"><?php echo $total_val_att[0]; ?></span> est/sont en attente de validation. <a href="index.php?page=admin&q=att&p=1">(Consulter)</a></p>
+             </form>
 
               <?php
-              $nbrArt=$total_insc_adm[0];
-              $perPage=4;
-              $nbrpages= ceil($nbrArt/$perPage);
+              
+              $nbrpagesall= ceil($total_insc_adm[0]/4);
+              $nbrpagesref= ceil($total_nonval_adm[0]/4);
+              $nbrpagesval= ceil($total_val_adm[0]/4);
+              $nbrpagesatt= ceil($total_val_att[0]/4);
 
-              if (isset($_GET['p']) && $_GET['p']>0 && $_GET['p']<=$nbrpages) {
-                $pageActu=$_GET['p'];
-              }else{
-               $pageActu=1;
-             }
+              if (isset($_GET['p']) && $_GET['p']>0 && $_GET['p']<=$nbrpagesall) {
+              $pageActu=$_GET['p'];
+              }else
+              {
+              $_GET['p']=1;
+              $pageActu=1;
+              }
+
+              if ($_GET['q']!="total" && $_GET['q']!="ref" && $_GET['q']!="adm" && $_GET['q']!="att") 
+              {
+              $_GET['q']="total";
+              }
+
+
 
              $pagesuiv=$pageActu+1;
              $pageprec=$pageActu-1;
@@ -179,8 +193,10 @@ $valid=0;
       {
         $_SESSION = array();
         session_destroy();
-        header("Location: http://localhost/projetweb/administrateur.php");
+        header("Location: http://localhost/projetweb/index.php?page=admin");
       }
+
+      if ( isset($_GET['q'])) {
 
       ?>
 
@@ -190,7 +206,7 @@ $valid=0;
       <div class="row">
 
       <div class="col-xs-8 col-xs-offset-2 text-center">
-      <h2> Annuaire des inscriptions</h2> 
+      <h2>Annuaire des inscriptions <?php  if ($_GET['q']=="ref") {echo " refusées ";} elseif ($_GET['q']=="adm") {echo " validées ";} elseif ($_GET['q']=="att") {echo " en attente ";} ?></h2> 
       </div>
 
       <div class="col-xs-1 col-xs-offset-1">
@@ -199,9 +215,36 @@ $valid=0;
 
       <?php
 
-      $sql= "SELECT * FROM utilisateur ORDER BY inscription LIMIT ".(($pageActu-1)*$perPage).",".$perPage."";
+      if ($_GET['q']=="total") 
+      {
+      $sql= "SELECT * FROM utilisateur ORDER BY inscription LIMIT ".(($pageActu-1)*$nbrpagesall).",4";
       $mespages = $bdd->query($sql);
       $affichpages = $mespages->fetchAll();
+      $pagin=$nbrpagesall;
+      }
+      else if ($_GET['q']=="ref") 
+      {
+      $sql= "SELECT * FROM utilisateur WHERE validation = 2 ORDER BY inscription LIMIT ".(($pageActu-1)*$nbrpagesref).",4";
+      $mespages = $bdd->query($sql);
+      $affichpages = $mespages->fetchAll();
+      $pagin=$nbrpagesref;
+      }
+
+      else if ($_GET['q']=="adm") 
+      {
+      $sql= "SELECT * FROM utilisateur WHERE validation = 1 ORDER BY inscription LIMIT ".(($pageActu-1)*$nbrpagesval).",4";
+      $mespages = $bdd->query($sql);
+      $affichpages = $mespages->fetchAll();
+      $pagin=$nbrpagesval;
+      }
+
+      else if ($_GET['q']=="att") 
+      {
+      $sql= "SELECT * FROM utilisateur WHERE validation = 0 ORDER BY inscription LIMIT ".(($pageActu-1)*$nbrpagesatt).",4";
+      $mespages = $bdd->query($sql);
+      $affichpages = $mespages->fetchAll();
+      $pagin=$nbrpagesatt;
+      }
 
       foreach ($affichpages as $affichles) 
       {
@@ -221,7 +264,7 @@ $valid=0;
             <div class="panel-body col-xs-8 col-xs-offset-2 text-center">
 
             <div class="titleins">
-              <a href= <?php echo "administrateur.php?a=".$utilisateur->getId()."" ?> > <?php echo "<h2> Inscription N° ".$affichles['id']."</h2>"; ?></a>
+              <a href= <?php echo "index.php?page=admin&a=".$utilisateur->getId()."" ?> > <?php echo "<h2> Inscription N° ".$affichles['id']."</h2>"; ?></a>
             </div>
 
             </div>
@@ -257,21 +300,22 @@ $valid=0;
        <?php
 
      }
-
+     
+     if ($pagin>1) {
 
      ?>
 
      <div class="col-xs-12 text-center">
        <nav aria-label="Page navigation">
         <ul class="pagination">
-          <li><a href= <?php echo "administrateur.php?p=$pageprec" ?> aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+          <li><a href= <?php echo "index.php?page=admin&q=".$_GET['q']."&p=$pageprec" ?> aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
           <?php
-          for ($i=1; $i <$nbrpages+1 ; $i++)
+          for ($i=1; $i <$pagin+1 ; $i++)
           { 
-            echo "<li><a href=\"administrateur.php?p=$i\">$i</a></li>";
+            echo "<li><a href=\"index.php?page=admin&q=".$_GET['q']."&p=$i\">$i</a></li>";
           }
           ?>
-          <li><a href=<?php echo "administrateur.php?p=$pagesuiv" ?> aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+          <li><a href=<?php echo "index.php?page=admin&q=".$_GET['q']."&p=$pagesuiv" ?> aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
         </ul>
       </nav>
     </div>
@@ -281,15 +325,32 @@ $valid=0;
 
     <?php
   }
+  }
+}
 
 
   elseif (isset($_GET['a'])) 
   {
-    $annonceselec=$_GET['a'];
+
+    $annonceselec=(int)$_GET['a'];
 
     $sql= "SELECT * FROM utilisateur WHERE id=".$annonceselec." LIMIT 1";
     $monannonce = $bdd->query($sql);
     $afficheannonce = $monannonce->fetch();
+
+    if(!$afficheannonce)
+    {
+    ?>
+
+<div class=" col-xs-8 col-xs-offset-2 alertmss">
+<p>
+Vous avez tenter de rechercher une annonce inexistante.
+</p>
+</div>
+
+    <?php
+    }else
+    {
 
     $utilisateur2 = new User( $afficheannonce['civilite'], $afficheannonce['nom'], $afficheannonce['prenom'], $afficheannonce['cp'], $afficheannonce['ville'], $afficheannonce['adresse'], $afficheannonce['naissance'], $afficheannonce['mail'], $afficheannonce['inscription'], $afficheannonce['acces'], $afficheannonce['rang'], $afficheannonce['place'], $afficheannonce['equipeadv'], $afficheannonce['rencontre'], $afficheannonce['validation'], $afficheannonce['id']);
 
@@ -299,7 +360,7 @@ $valid=0;
 
       <div class="col-xs-8 col-xs-offset-2 annonce">
 
-       <form method="post" action=<?php echo "administrateur.php?a=".$utilisateur2->getId()."" ?> name="annoncegestion">
+       <form method="post" action=<?php echo "index.php?page=admin&a=".$utilisateur2->getId()."" ?> name="annoncegestion">
 
         <div class="row">
 
@@ -445,7 +506,7 @@ $valid=0;
     </div>
 
     <div class="col-xs-2 text-center">
-    <button type="button" id="exit" onclick="document.location.href='http://localhost/projetweb/administrateur.php?p=1'">
+    <button type="button" id="exit" onclick="document.location.href='http://localhost/projetweb/index.php?page=admin&q=total&p=1'">
      <i class="fa fa-chevron-circle-left fa-4x" aria-hidden="true"></i>
     </button>
     </div>
@@ -462,9 +523,13 @@ foreach ($_POST['upd'] as $key=>$updates)
 {
 $util[$key]=$updates;
 }
+    try
+    {
 
     $utilisateur3 = new User( $util['civilite'], $util['nom'], $util['prenom'], $util['cp'], $util['ville'], $util['adresse'], $util['naissance'], $util['mail'], $util['inscription'], $util['acces'], $util['rang'], $util['place'], $util['equipeadv'], $util['rencontre'], $util['validation'], $annonceselec);
 
+    if ($utilisateur3 != $utilisateur2) {
+      
     $stmtann = $bdd->prepare('UPDATE utilisateur SET civilite = :civilite, nom = :nom, prenom = :prenom, cp = :cp, ville = :ville, adresse = :adresse, naissance = :naissance, mail = :mail, inscription = :inscription, acces = :acces, rang = :rang, place = :place, equipeadv = :equipeadv, rencontre = :rencontre, validation = :validation WHERE id = :id');
 
      $stmtann->bindValue('civilite', $utilisateur3->getCivilite(), PDO::PARAM_STR);
@@ -493,73 +558,92 @@ $util[$key]=$updates;
 
      ?>
 
-    <div class="col-xs-12 text-center alertmss">
-    <p><i class="fa fa-info fa-2x" aria-hidden="true"></i> Opération de modification effectué avec succès </p>
+    <div class="col-xs-8 col-xs-offset-2 alertmss">
+    <p class="text-center"><i class="fa fa-info" aria-hidden="true"></i> Opération de modification effectué avec succès </p>
     <p>Vous avez changé :</p>
     <?php  
 
     if ($utilisateur3->getCivilite() != $utilisateur2->getCivilite()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La civilité : '.$utilisateur2->getCivilite().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCivilite().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La civilité : </strong>'.$utilisateur2->getCivilite().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCivilite().'</p>';
     }
 
         if ($utilisateur3->getNom() != $utilisateur2->getNom()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le nom : '.$utilisateur2->getNom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNom().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> Le nom : </strong>'.$utilisateur2->getNom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNom().'</p>';
     }
 
         if ($utilisateur3->getPrenom() != $utilisateur2->getPrenom()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le prénom : '.$utilisateur2->getPrenom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPrenom().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> Le prénom : </strong>'.$utilisateur2->getPrenom().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPrenom().'</p>';
     }
 
         if ($utilisateur3->getCp() != $utilisateur2->getCp()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le Code Postal : '.$utilisateur2->getCp().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCp().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> Le Code Postal : </strong>'.$utilisateur2->getCp().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getCp().'</p>';
     }
 
         if ($utilisateur3->getAdresse() != $utilisateur2->getAdresse()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'adresse : '.$utilisateur2->getAdresse().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAdresse().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> L\'adresse : </strong>'.$utilisateur2->getAdresse().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAdresse().'</p>';
     }
 
             if ($utilisateur3->getNaissance() != $utilisateur2->getNaissance()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La naissance : '.$utilisateur2->getNaissance().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNaissance().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La naissance : </strong>'.$utilisateur2->getNaissance().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getNaissance().'</p>';
     }
 
                 if ($utilisateur3->getMail() != $utilisateur2->getMail()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le mail : '.$utilisateur2->getMail().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getMail().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> Le mail : </strong>'.$utilisateur2->getMail().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getMail().'</p>';
     }
 
                 if ($utilisateur3->getInscription() != $utilisateur2->getInscription()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La naissance : '.$utilisateur2->getInscription().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getInscription().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La naissance : </strong>'.$utilisateur2->getInscription().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getInscription().'</p>';
     }
 
                     if ($utilisateur3->getAcces() != $utilisateur2->getAcces()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'accés : '.$utilisateur2->getAcces().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAcces().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> L\'accés : </strong>'.$utilisateur2->getAcces().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getAcces().'</p>';
     }
 
                     if ($utilisateur3->getRang() != $utilisateur2->getRang()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> Le rang : '.$utilisateur2->getRang().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRang().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> Le rang : </strong>'.$utilisateur2->getRang().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRang().'</p>';
     }
 
                 if ($utilisateur3->getPlace() != $utilisateur2->getPlace()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La place : '.$utilisateur2->getPlace().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPlace().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La place : </strong>'.$utilisateur2->getPlace().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getPlace().'</p>';
     }
 
                 if ($utilisateur3->getEquipeadv() != $utilisateur2->getEquipeadv()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> L\'équipe adverse : '.$utilisateur2->getEquipeadv().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getEquipeadv().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> L\'équipe adverse : </strong>'.$utilisateur2->getEquipeadv().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getEquipeadv().'</p>';
     }
 
                     if ($utilisateur3->getRencontre() != $utilisateur2->getRencontre()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La rencontre : '.$utilisateur2->getRencontre().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRencontre().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La rencontre : </strong>'.$utilisateur2->getRencontre().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getRencontre().'</p>';
     }
 
 
                     if ($utilisateur3->getValidation() != $utilisateur2->getValidation()) {
-    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> La validation : '.$utilisateur2->getValidation().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getValidation().'</p>';
+    echo '<p><i class="fa fa-wrench" aria-hidden="true"></i> <strong> La validation : </strong>'.$utilisateur2->getValidation().' <i class="fa fa-long-arrow-right" aria-hidden="true"></i> '.$utilisateur3->getValidation().'</p>';
     }
+
 
     ?>
     </div>
 
      <?php
 
+    }
+
+    }
+    catch (Exception $e) 
+    {
+?>
+
+<div class=" col-xs-8 col-xs-offset-2 alertmss">
+<p>
+Probléme d'insertion administrateur. Veuillez vérifier si les informations remplies sont cohérentes. 
+</p>
+</div>
+
+<?php
+    
+    }
+
+  
   }
 
  elseif (isset($_POST['supins'])) 
@@ -569,9 +653,19 @@ $util[$key]=$updates;
   $stmtann2->bindValue('id', $annonceselec, PDO::PARAM_INT); 
   $stmtann2->execute();
 
+?>
+
+<div class=" col-xs-8 col-xs-offset-2 alertmss">
+<p>
+La suppression de l'inscription a été opérée avec succés. 
+</p>
+</div>
+
+<?php
+
  }
 
-
+}
 }
 }
 

@@ -3,7 +3,7 @@ $('#myModal2').modal()
   function matchfct(champ)
   {
 
-    $.getJSON('fichier.json',function(data){
+    $.getJSON('ficjs/fichier.json',function(data){
 
      for(i=0; i<data.length; i++)
      {
@@ -62,7 +62,7 @@ $('#myModal2').modal()
     }
 
 
-     $.getJSON('fichier2.json',function(data){
+     $.getJSON('ficjs/fichier2.json',function(data){
      
      for(var i=0; i<data.length; i++)
      {

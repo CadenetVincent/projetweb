@@ -9,15 +9,30 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
 
 <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="./fichiercss.css">
-<script type="text/javascript" src="./fichierjs.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./css/cssform.css">
+
+<script type="text/javascript" src="./ficjs/fichierjs.js"></script>
+
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FontAwesome -->
+    <script src="https://use.fontawesome.com/a40bcd97ad.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
-<body>
+  <section class="background">
 
-  <?php
+  <?php require "./utilisateur.php"; ?>
 
-  require "./utilisateur.php";
+  <?php include_once('header.php'); ?>
+
+  <body>
+
+<?php
 
   try
   {
@@ -30,13 +45,14 @@
   }
 
   define('MYSQL_DATETIME_FORMAT','Y-m-d H:i:s');
+  
   ?>
 
 
 
   <div class="container">
 
-    <form  method="post" action="formulaire.php" name="formulaire" onsubmit="return traitementform()">
+    <form  method="post" action="projetweb/index.php?page=inscription" name="formulaire" onsubmit="return traitementform()">
 
       <div class="row">
 
@@ -154,7 +170,7 @@
               echo '<option value="'.$donneesimg1['matchequ'].'" >'.$donneesimg1['matchequ'] . '</option>';
             }
 
-            $fichier = fopen('fichier.json', 'w+');
+            $fichier = fopen('ficjs/fichier.json', 'w+');
             fwrite($fichier, json_encode($data1,JSON_PRETTY_PRINT));
             fclose($fichier);
 
@@ -175,7 +191,7 @@
 
             }
 
-            $fichier2 = fopen('fichier2.json','w+');
+            $fichier2 = fopen('ficjs/fichier2.json','w+');
             fwrite($fichier2, json_encode($data2,JSON_PRETTY_PRINT));
             fclose($fichier2);
 
@@ -311,9 +327,6 @@ function validateDate($date, $format = 'Y-m-d')
 
 if (isset($_POST['envoie'])){
 
-
-
-
   foreach($_POST['utilisateur'] as $key => $valeur){
     $util[$key]=$valeur;
   }
@@ -325,9 +338,7 @@ $util['inscription']=$dateactuelle;
    $utilisateur = new User( $util['civil'], $util['nom'], $util['prenom'], $util['cp'], $util['ville'], $util['adresse'], $util['naissance'], $util['mail'], $util['inscription'], $util['acces'], $util['rang'], $util['place'], $util['listeclub'], $util['affichematch'], $util['validation'], $util['id']);
 
 
-
 // Vérifier qu'une place n'ait pas été déja réservée par un client !
-
 
   $stmt2 = $bdd->prepare('SELECT acces, rang, place, equipeadv FROM utilisateur WHERE acces = :acces AND rang = :rang AND place = :place AND equipeadv = :equipeadv LIMIT 1');
 
@@ -389,7 +400,6 @@ $util['inscription']=$dateactuelle;
      $stmt->bindValue('rencontre', $utilisateur->getRencontre(), PDO::PARAM_STR); 
      $stmt->bindValue('validation', $utilisateur->getValidation(), PDO::PARAM_INT); 
 
-
      $stmt->execute();
 
    }
@@ -399,6 +409,10 @@ $util['inscription']=$dateactuelle;
 ?>
 
 </body>
+
+<?php include_once('footer.php'); ?>
+
+</section>
 
 </html>
 

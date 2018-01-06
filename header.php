@@ -19,7 +19,7 @@
                     <h2><b>FC Sochaux</b> <span style="font-weight: 300;">le site officiel</span></h2>
                 </div>
                 <div class="navbar-right">
-                    <a class="onglet" href="inscription.php"><h3>Inscription</h3></a>
+                    <a class="onglet" href="index.php?page=inscription"><h3>Inscription</h3></a>
                 </div>
             </div>
         </div>

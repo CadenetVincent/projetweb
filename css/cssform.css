@@ -31,6 +31,7 @@ color: #EABB0E;
 
 .titrediv
 {
+   margin-top: 10%;
    padding: 2% 2% 2% 2%;
    background-color: #102B64;
    border-style: solid;
@@ -68,16 +69,15 @@ display: none;
 
 #env
 {
-margin-top: 3%;
+width: 5em;
+height: 5em;
+margin-top: 2%;
 border-radius: 50%;
-background: url("./logos_equipes/sticker.png");
+background: url(../logos_equipes/sticker.png) no-repeat;
+background-size: 5em 5em;
 color: #102B64;
 font-weight: bold;
 font-size: 16px;
-background-size: 5em 5em;
-width: 5em;
-height: 5em;
-
 }
 
 
@@ -97,6 +97,7 @@ height: 5em;
  display: inline;
  position: absolute;
  background-color: #FDFABD;
+ color: #102B64;
  border-radius: 10px;
  padding: 2px 2px 2px 2px;
  margin-left: 1%;

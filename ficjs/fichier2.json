@@ -12,8 +12,8 @@
         "name": "N\u00eemes"
     },
     {
-        "place": "4020",
-        "name": "Auxerre"
+        "place": "110",
+        "name": "Le HAC"
     },
     {
         "place": "2271",
@@ -28,7 +28,7 @@
         "name": "Ch\u00e2teauroux"
     },
     {
-        "place": "1548",
+        "place": "1547",
         "name": "Ch\u00e2teauroux"
     },
     {
@@ -36,8 +36,8 @@
         "name": "N\u00eemes"
     },
     {
-        "place": "2693",
-        "name": "Paris FC"
+        "place": "2550",
+        "name": "Le HAC"
     },
     {
         "place": "2312",
@@ -58,5 +58,9 @@
     {
         "place": "0",
         "name": "Le HAC"
+    },
+    {
+        "place": "3344",
+        "name": "Orl\u00e9ans"
     }
 ]
